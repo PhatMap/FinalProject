@@ -26,13 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c"),
     @NamedQuery(name = "Cart.findById", query = "SELECT c FROM Cart c WHERE c.id = :id"),
     @NamedQuery(name = "Cart.findByName", query = "SELECT c FROM Cart c WHERE c.name = :name"),
-    @NamedQuery(name = "Cart.findByPrice", query = "SELECT c FROM Cart c WHERE c.price = :price"),
-    @NamedQuery(name = "Cart.findByTitle", query = "SELECT c FROM Cart c WHERE c.title = :title"),
-    @NamedQuery(name = "Cart.findByDescription", query = "SELECT c FROM Cart c WHERE c.description = :description"),
-    @NamedQuery(name = "Cart.findByCateid", query = "SELECT c FROM Cart c WHERE c.cateid = :cateid"),
     @NamedQuery(name = "Cart.findByAmount", query = "SELECT c FROM Cart c WHERE c.amount = :amount"),
+    @NamedQuery(name = "Cart.findByPrice", query = "SELECT c FROM Cart c WHERE c.price = :price"),
+    @NamedQuery(name = "Cart.findByPid", query = "SELECT c FROM Cart c WHERE c.pid = :pid"),
     @NamedQuery(name = "Cart.findByCartid", query = "SELECT c FROM Cart c WHERE c.cartid = :cartid"),
-    @NamedQuery(name = "Cart.findByPid", query = "SELECT c FROM Cart c WHERE c.pid = :pid")})
+    @NamedQuery(name = "Cart.findByTotal", query = "SELECT c FROM Cart c WHERE c.total = :total")})
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,35 +43,29 @@ public class Cart implements Serializable {
     @Lob
     @Column(name = "image")
     private String image;
-    @Column(name = "price")
-    private Integer price;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "cateid")
-    private Integer cateid;
     @Column(name = "amount")
     private Integer amount;
-    @Column(name = "cartid")
-    private Integer cartid;
+    @Column(name = "price")
+    private Integer price;
     @Column(name = "pid")
     private Integer pid;
+    @Column(name = "cartid")
+    private Integer cartid;
+    @Column(name = "total")
+    private Integer total;
 
     public Cart() {
     }
 
-    public Cart(Integer id, String name, String image, Integer price, String title, String description, Integer cateid, Integer amount, Integer cartid, Integer pid) {
+    public Cart(Integer id, String name, String image, Integer amount, Integer price, Integer pid, Integer cartid, Integer total) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.price = price;
-        this.title = title;
-        this.description = description;
-        this.cateid = cateid;
         this.amount = amount;
-        this.cartid = cartid;
+        this.price = price;
         this.pid = pid;
+        this.cartid = cartid;
+        this.total = total;
     }
 
     
@@ -102,6 +94,14 @@ public class Cart implements Serializable {
         this.image = image;
     }
 
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
     public Integer getPrice() {
         return price;
     }
@@ -110,36 +110,12 @@ public class Cart implements Serializable {
         this.price = price;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getCateid() {
-        return cateid;
-    }
-
-    public void setCateid(Integer cateid) {
-        this.cateid = cateid;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
     public Integer getCartid() {
@@ -150,12 +126,12 @@ public class Cart implements Serializable {
         this.cartid = cartid;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getTotal() {
+        return total;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     @Override
