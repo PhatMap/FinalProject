@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class DAO {
         static EntityManager  em = Utils.getEntityManager();
         static EntityTransaction trans = em.getTransaction();
+        
         public static List<Product> getAllProduct(){
             String jpql="select o from Product o";
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
@@ -39,13 +40,15 @@ public class DAO {
                 if(maxPageProduct==3) break;
             }
             return listNeed;
-        }
+        } 
+        
         public static List<Category> getAllCategory(){
             String jpql="select o from Category o";
             TypedQuery<Category> query = em.createQuery(jpql,Category.class);
             List<Category> listc = query.getResultList();            
             return listc;
         }
+        
         public static Product getLast(){
             String jpql="select o from Product o order by o.id desc";
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
@@ -53,18 +56,21 @@ public class DAO {
             Product product = query.getSingleResult();
             return product;
         }
+        
         public static List<Product> getProdcutsByID(String cid){
             String jpql="select o from Product o where o.cateid = "+cid;
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
             List<Product> product = query.getResultList();
             return product;
         }
+        
         public static Product getProdcutByID(String id){
             String jpql="select o from Product o where o.id = "+id;
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
             Product product = query.getSingleResult();
             return product;
         }
+        
         public static List<Product> getYouMayAlsoLike(){
             String jpql="select o from Product o order by o.id desc";
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
@@ -72,12 +78,14 @@ public class DAO {
             List<Product> alsolike = query.getResultList();
             return alsolike;
         }
+        
         public static List<Product> getBySearch(String text){
             String jpql="select o from Product o where o.name like "+"'%"+text+"%'";
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
             List<Product> search = query.getResultList();
             return search;
         }
+        
         public static Account getLogin(String user, String pass){
             String jpql="select o from Account o where o.user = '"+ user +"' and o.password = '"+ pass+"'";
             try{
@@ -88,6 +96,7 @@ public class DAO {
             }
             return null;
         }
+        
         public static Account checkUsetExist(String user){
             String jpql="select o from Account o where o.user = '"+ user+"'";
             try{
@@ -98,6 +107,7 @@ public class DAO {
             }
             return null;
         }
+        
         public static int getNewID(){
             try{
                 String jpql="select o from Account o order by o.acid desc";
@@ -109,6 +119,7 @@ public class DAO {
                 return 1;
             }
         }
+        
         public static int getNewProductID(){
             try{
                 String jpql="select o from Product o order by o.id desc";
@@ -120,17 +131,18 @@ public class DAO {
                 return 1;
             }
         }
+        
         public static int getNewCartID(){
             try{
                 String jpql="select o from Cart o order by o.id desc";
                 TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
-                query.setMaxResults(1);
                 Cart proid = query.getSingleResult();   
                 return proid.getId()+1;
             }catch(Exception e){
                 return 1;
             }
         }
+        
         public static void setAccount(String user,String pass){
             Account newAccount = new Account(DAO.getNewID(),user,pass,false,false);
             try{
@@ -141,6 +153,7 @@ public class DAO {
                 trans.rollback();
             }
         }
+        
         public static void UpdateProduct(int id,String name,String image,int price,String title,String Description,int category,int amount){
             Product UpdateProduct = new Product(id,name,image, price, title, Description, category,amount);
             try{
@@ -151,6 +164,7 @@ public class DAO {
                 trans.rollback();
             }
         }
+        
         public static void DeleteByID(String delid){
             String jpql="select o from Product o where o.id = '"+ delid+"'";
             TypedQuery<Product> query = em.createQuery(jpql,Product.class);
@@ -163,6 +177,7 @@ public class DAO {
                 trans.rollback();
             }
         }
+        
         public static void addProduct(String name,String image,int price,String title,String Description,int category,int amount){
             Product newProduct = new Product(DAO.getNewProductID(),name,image, price, title, Description, category,amount);
             try{
@@ -173,15 +188,17 @@ public class DAO {
                 trans.rollback();
             }
         }
+        
        public static String getCateBycateid(int cateid){
            String jpql="select o from Category o where o.catid = '"+ cateid+"'";
            TypedQuery<Category> query = em.createQuery(jpql,Category.class);
            Category cate = query.getSingleResult(); 
            return cate.getCatname();
        }
+       
        public static void AddToCart(String pid, int uid){
            Product getProduct = DAO.getProdcutByID(pid);
-           Cart newProduct = new Cart(DAO.getNewCartID(),getProduct.getName(),getProduct.getImage(), getProduct.getPrice(), getProduct.getTitle(), getProduct.getDescription(), getProduct.getCateid(),1,uid,getProduct.getId());
+           Cart newProduct = new Cart(DAO.getNewCartID(),getProduct.getName(),getProduct.getImage(),1,getProduct.getPrice(),getProduct.getId(),uid,getProduct.getPrice());
             try{
                 trans.begin();
                 em.persist(newProduct);
@@ -190,6 +207,7 @@ public class DAO {
                 trans.rollback();
             }
        }
+       
        public static void RemoveFromCart(String pid, String cartid){
             String jpql="select o from Cart o where o.pid = '"+ pid+"' and o.cartid = '"+cartid+"'";
             TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
@@ -202,12 +220,21 @@ public class DAO {
                 trans.rollback();
             }
         }
+       
        public static List<Cart> getUserCart(String id){
             String jpql="select o from Cart o where o.cartid="+id;
             TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
             List<Cart> ucart = query.getResultList();
             return ucart;
         }
+       
+       public static Account getUserAccount(String id){
+            String jpql="select o from Account o where o.acid="+id;
+            TypedQuery<Account> query = em.createQuery(jpql,Account.class);
+            Account acc = query.getSingleResult();
+            return acc;
+        }
+       
        public static boolean CheckCartExist(String uid, String pid){
            try{
                 String jpql="select o from Cart o where o.cartid = '"+ uid+"'"+" and o.pid = '"+pid+"'";
@@ -219,11 +246,14 @@ public class DAO {
            }
            return false;
        }
+       
        public static void AddExist(String uid, String pid){
                 String jpql="select o from Cart o where o.cartid = '"+ uid+"'"+" and o.pid = '"+pid+"'";
                 TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
                 Cart ExistProduct = query.getSingleResult();
                 ExistProduct.setAmount(ExistProduct.getAmount()+1);
+                int total = ExistProduct.getAmount() * ExistProduct.getPrice();
+                ExistProduct.setTotal(total);
                 try{
                     trans.begin();
                     em.merge(ExistProduct);
@@ -232,11 +262,14 @@ public class DAO {
                     trans.rollback();
             }       
        }
+       
        public static void ChangeCartAmount(String pid,String cartid, String newAmount){
                 String jpql="select o from Cart o where o.pid = '"+ pid+"'"+" and o.cartid = '"+cartid+"'";
                 TypedQuery<Cart> query = em.createQuery(jpql,Cart.class);
                 Cart cartProduct = query.getSingleResult();
-                cartProduct.setAmount(Integer.parseInt(newAmount)+1);
+                cartProduct.setAmount(Integer.parseInt(newAmount));
+                int total = cartProduct.getAmount() * cartProduct.getPrice();
+                cartProduct.setTotal(total);
                 try{
                     trans.begin();
                     em.merge(cartProduct);
@@ -245,7 +278,25 @@ public class DAO {
                     trans.rollback();
             }  
        }
+       
+       public static void saveProfile(String currAccountid,String name,String email,String address,String username,String password){
+           String jpql="select o from Account o where o.acid = '"+ currAccountid+"'";
+           TypedQuery<Account> query = em.createQuery(jpql,Account.class);
+           Account profile = query.getSingleResult();
+           profile.setName(name);
+           profile.setEmail(email);
+           profile.setAddress(address);
+           profile.setUser(username);
+           profile.setPassword(password);
+           try{
+                    trans.begin();
+                    em.merge(profile);
+                    trans.commit();
+                }catch(Exception e){
+                    trans.rollback();
+            }       
+       }
        public static void main(String[] args) {
-           
+           DAO.AddExist("1", "2");
     }
 }
