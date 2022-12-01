@@ -87,7 +87,7 @@ public class controlLogin extends HttpServlet {
             cp.setMaxAge(120);
             response.addCookie(cu);
             response.addCookie(cp);
-            response.sendRedirect("controlProduct");
+            response.sendRedirect("controlShop");
         }
     }
 

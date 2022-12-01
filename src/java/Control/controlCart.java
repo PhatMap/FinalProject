@@ -5,6 +5,7 @@
 package Control;
 
 import DAO.DAO;
+import Entity.Account;
 import Entity.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,10 +36,21 @@ public class controlCart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String cartID = request.getParameter("cartID");
-        List<Cart> userCart = DAO.getUserCart(cartID);
-        request.setAttribute("userCart", userCart);
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Account currAccount = (Account) session.getAttribute("acc");
+        if(currAccount!=null){
+            List<Cart> userCart = DAO.getUserCart(currAccount.getAcid().toString());
+            int Odertotal=0;
+            for(Cart o : userCart){
+                Odertotal+=o.getTotal();
+            }
+            request.setAttribute("userCart", userCart);
+            request.setAttribute("Odertotal", Odertotal);
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
+        }else{
+            response.sendRedirect("cart.jsp");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

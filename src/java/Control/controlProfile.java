@@ -5,23 +5,22 @@
 package Control;
 
 import DAO.DAO;
-import Entity.Category;
-import Entity.Product;
+import Entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranTrungPhat
  */
-@WebServlet(name = "controlDelete", urlPatterns = {"/controlDelete"})
-public class controlDelete extends HttpServlet {
+@WebServlet(name = "controlProfile", urlPatterns = {"/controlProfile"})
+public class controlProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +33,35 @@ public class controlDelete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String delid = request.getParameter("delid");
-        DAO.DeleteByID(delid);
-        response.sendRedirect("controlPManage");
+            response.setContentType("text/html;charset=UTF-8");
+            HttpSession session = request.getSession();
+            Account currAccount = (Account) session.getAttribute("acc");
+            String action = request.getParameter("action");
+            
+        if(action==null) action="open";
+        
+        if(action.equals("open")){
+        if(currAccount!=null){
+            Account profile = DAO.getUserAccount(currAccount.getAcid().toString());
+            request.setAttribute("profile", profile);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+        }else{
+            response.sendRedirect("controlShop");
+            }
+        }
+        if(action.equals("save")){
+                String name = request.getParameter("name");
+                String email = request.getParameter("email");
+                String address = request.getParameter("address");
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+            if(currAccount!=null){
+                DAO.saveProfile(currAccount.getAcid().toString(),name, email, address, username, password);
+                response.sendRedirect("controlProfile");
+            }else{
+                response.sendRedirect("controlShop");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

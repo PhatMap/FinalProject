@@ -5,10 +5,9 @@
 package Control;
 
 import DAO.DAO;
+import Entity.Account;
 import Entity.Cart;
-import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,23 +35,17 @@ public class controlAddToCart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String uid = request.getParameter("uid");
-        String pid = request.getParameter("pid");
-        if(uid!=""){
-            if(DAO.CheckCartExist(uid, pid)){
-                DAO.AddExist(uid,pid);
-                List<Cart> userCart = DAO.getUserCart(uid);
-                request.setAttribute("userCart", userCart);
-                request.getRequestDispatcher("cart.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Account currAccount = (Account) session.getAttribute("acc");
+        if(currAccount!=null){
+            String pid = request.getParameter("pid");
+            if(DAO.CheckCartExist(currAccount.getAcid().toString(), pid)){
+                DAO.AddExist(currAccount.getAcid().toString(),pid);
             }else{
-                int toIntuid = Integer.parseInt(uid);
-                Product product = DAO.getProdcutByID(pid);
+                int toIntuid = Integer.parseInt(currAccount.getAcid().toString());
                 DAO.AddToCart(pid,toIntuid);
-                List<Cart> userCart = DAO.getUserCart(uid);
-                request.setAttribute("userCart", userCart);
-                request.getRequestDispatcher("cart.jsp").forward(request, response);
             }
-        
+            response.sendRedirect("controlCart");
         }
         else{
             response.sendRedirect("login.jsp");

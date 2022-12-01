@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author TranTrungPhat
  */
-@WebServlet(name = "controlDelete", urlPatterns = {"/controlDelete"})
-public class controlDelete extends HttpServlet {
+@WebServlet(name = "controlShop", urlPatterns = {"/controlShop"})
+public class controlShop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,9 +35,39 @@ public class controlDelete extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String delid = request.getParameter("delid");
-        DAO.DeleteByID(delid);
-        response.sendRedirect("controlPManage");
+        String pageid = request.getParameter("pageid");
+        if(pageid==null){
+            pageid="1";
+        }
+        int currPage=Integer.parseInt(pageid);
+        int nearPage=currPage-1;
+        int farPage=currPage+1;
+        int pagec = DAO.getAllProduct().size();
+        if(pagec%3==0) pagec=pagec/3;
+        else pagec=(pagec/3)+1;
+        
+        if(currPage==1){
+            nearPage=currPage;
+            farPage=currPage+1;
+        }
+        if(currPage==pagec){
+            nearPage=currPage-1;
+            farPage=currPage;
+        }
+
+        
+        List<Product> Plist = DAO.getProductByPage(currPage);
+        List<Category> Clist = DAO.getAllCategory();
+        Product latest = DAO.getLast();
+        
+        request.setAttribute("nearPage", nearPage); 
+        request.setAttribute("currPage", currPage); 
+        request.setAttribute("farPage", farPage);  
+        request.setAttribute("pagec", pagec); 
+        request.setAttribute("Plist", Plist);
+        request.setAttribute("Clist", Clist);
+        request.setAttribute("latest", latest);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

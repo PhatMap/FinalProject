@@ -5,6 +5,7 @@
 package Control;
 
 import DAO.DAO;
+import Entity.Account;
 import Entity.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,20 +36,22 @@ public class controlCartElements extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
-        String pid = request.getParameter("pid");
-        String cartid = request.getParameter("cartid");
-        String newAmount = request.getParameter("newAmount");
-        if(action.equals("remove")){
-            DAO.RemoveFromCart(pid,cartid);
-            }
-        if(action.equals("quantity")){
-            DAO.ChangeCartAmount(pid, cartid, newAmount);
+        HttpSession session = request.getSession();
+        Account currAccount = (Account) session.getAttribute("acc");
+        if(currAccount!=null){
+            String action = request.getParameter("action");
+            String pid = request.getParameter("pid");
+            if(action.equals("remove")){
+            DAO.RemoveFromCart(pid,currAccount.getAcid().toString());
+                }
+            if(action.equals("quantity")){
+                    String newAmount = request.getParameter("newAmount");
+                    DAO.ChangeCartAmount(pid, currAccount.getAcid().toString(), newAmount);
+                }
+            response.sendRedirect("controlCart");
+        }else{
+            response.sendRedirect("controlCart");
         }
-        
-        List<Cart> userCart = DAO.getUserCart(cartid);
-        request.setAttribute("userCart", userCart);
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
