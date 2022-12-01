@@ -16,17 +16,18 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="login.jsp"><button class="dropdown-item" type="button">Sign in</button></a>
+                            <a href="controlLogin"><button class="dropdown-item" type="button">Sign in</button></a>
                             <a href="signup.jsp"><button class="dropdown-item" type="button">Sign up</button></a>
                         </div>
                     </div>
                     </c:if>
                     <c:if test="${sessionScope.acc != null}">
                     <div class="btn-group">
-                        <button style="color:blue;background-color:lightskyblue;border:2px solid lightskyblue;">Hello: ${sessionScope.acc.user}</button>
-                    </div>
-                    <div class="btn-group">
-                        <a href="controlLogout"><button style="background-color:DodgerBlue;border:2px solid DodgerBlue;" type="button">Sign out</button></a>
+                        <button style="color:blue;background-color:lightskyblue;border:2px solid lightskyblue;" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Hello: ${sessionScope.acc.user}</button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="controlLogout"><button class="dropdown-item" type="button">Sign out</button></a>
+                            <a href="controlProfile"><button class="dropdown-item" class="dropdown-item" type="button">Profile</button></a>
+                        </div>
                     </div>
                     </c:if>
                 </div>
@@ -44,7 +45,7 @@
         </div>
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
-                <a href="controlProduct" class="text-decoration-none">
+                <a href="controlShop" class="text-decoration-none">
                     <span class="h1 text-uppercase text-primary bg-dark px-2">Ao</span>
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Only</span>
                 </a>

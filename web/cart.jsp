@@ -86,10 +86,10 @@
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
+                                                <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input name="newAmount" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="${o.amount}">
+                                    <input name="newAmount" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="${o.amount}" readonly>
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-primary btn-plus">
                                                 <i class="fa fa-plus"></i>
@@ -98,8 +98,8 @@
                                 </div>
                                 </form>
                             </td>
-                            <td class="align-middle">${o.price}</td>
-                            <td class="align-middle"><a href="controlCartElements?pid=${o.pid}&cartid=${o.cartid}&action=${"remove"}"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></a></td>
+                            <td class="align-middle">${o.total}</td>
+                            <td class="align-middle"><a href="controlCartElements?pid=${o.pid}&action=${"remove"}"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></a></td>
                         </tr>
                        </c:forEach>
                     </tbody>
@@ -117,19 +117,17 @@
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
+                    <c:forEach items="${userCart}" var="o">
                         <div class="d-flex justify-content-between mb-3">
-                            <h6>Subtotal</h6>
-                            <h6>$150</h6>
+                            <h6>${o.name}</h6>
+                            <h6>${o.total}</h6>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
-                        </div>
+                    </c:forEach>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Total</h5>
-                            <h5>$160</h5>
+                            <h5>${Odertotal}</h5>
                         </div>
                         <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
                     </div>

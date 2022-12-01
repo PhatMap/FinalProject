@@ -16,7 +16,7 @@
         <title>Sign up Form</title>
     </head>
     <body>
-        <h2><a href="controlProduct">Back to shop<a></h2>
+        <h2><a href="controlShop">Back to shop<a></h2>
         <div id="logreg-forms">
             <form class="form-signin" action="controlSignup" method="post">
                 <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign up</h1>

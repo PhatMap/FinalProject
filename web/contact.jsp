@@ -1,3 +1,9 @@
+<%-- 
+    Document   : contact
+    Created on : Nov 6, 2022, 12:28:38 AM
+    Author     : TranTrungPhat
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +65,7 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate" action="thankyou.jsp" method="post">
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Your Name"
                                 required="required" data-validation-required-message="Please enter your name" />
@@ -82,7 +88,8 @@
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" href="thankyou.jsp" type="submit" id="sendMessageButton">Send Message</button>
+                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send
+                                Message</button>
                         </div>
                     </form>
                 </div>
@@ -90,11 +97,11 @@
             <div class="col-lg-5 mb-5">
                 <div class="bg-light p-30 mb-30">
                     <iframe style="width: 100%; height: 250px;"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.479704258943!2d106.7693793233043!3d10.851072039689075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752774d7e357c3%3A0x7cc744cb226ad64!2zc-G7kSAxIMSQLiBWw7UgVsSDbiBOZ8OibiwgTGluaCBDaGnhu4N1LCBUaOG7pyDEkOG7qWMsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmlldG5hbQ!5e0!3m2!1sen!2sbd!4v1669765742813!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
                     frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 </div>
                 <div class="bg-light p-30 mb-3">
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>số 1 Đ. Võ Văn Ngân, Linh Chiểu, Thủ Đức, Thành phố Hồ Chí Minh, Vietnam</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
                     <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
                 </div>

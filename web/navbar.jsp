@@ -23,9 +23,9 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="home.jsp" class="nav-item nav-link">Home</a>
-                            <a href="controlProduct" class="nav-item nav-link">Shop</a>
+                            <a href="controlShop" class="nav-item nav-link">Shop</a>
                             <c:if test="${sessionScope.acc==null}"><a href="cart.jsp" class="nav-item nav-link">Shopping Cart</a></c:if>
-                            <c:if test="${sessionScope.acc!=null}"><a href="controlCart?cartID=${sessionScope.acc.acid}" class="nav-item nav-link">Shopping Cart</a></c:if>
+                            <c:if test="${sessionScope.acc!=null}"><a href="controlCart" class="nav-item nav-link">Shopping Cart</a></c:if>
                             <a href="checkout.jsp" class="nav-item nav-link">Checkout</a>
                             <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                         </div>

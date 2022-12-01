@@ -123,7 +123,7 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="${product.image}" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href="controlAddToCart?uid=${sessionScope.acc.acid}&pid=${product.id}"><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="controlAddToCart?pid=${product.id}"><i class="fa fa-shopping-cart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
@@ -150,14 +150,14 @@
                     <div class="col-12">
                         <nav>
                           <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="controlProduct?pageid=${nearPage}">Previous</span></a></li>
+                            <li class="page-item"><a class="page-link" href="controlShop?pageid=${nearPage}">Previous</span></a></li>
                             <c:if test="${currPage == pagec}"><li class="page-item disabled"><a class="page-link" href="#">...</a></li></c:if>
                             <c:forEach begin="${nearPage}" end="${farPage}" var="p">
-                                <c:if test="${currPage==p}"><li class="page-item active"><a class="page-link" href="controlProduct?pageid=${p}">${p}</a></li></c:if>
-                                <c:if test="${currPage!=p}"><li class="page-item"><a class="page-link" href="controlProduct?pageid=${p}">${p}</a></li></c:if>
+                                <c:if test="${currPage==p}"><li class="page-item active"><a class="page-link" href="controlShop?pageid=${p}">${p}</a></li></c:if>
+                                <c:if test="${currPage!=p}"><li class="page-item"><a class="page-link" href="controlShop?pageid=${p}">${p}</a></li></c:if>
                             </c:forEach>
                             <c:if test="${currPage==1}"><li class="page-item disabled"><a class="page-link" href="#">...</a></li></c:if>
-                            <li class="page-item"><a class="page-link" href="controlProduct?pageid=${farPage}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="controlShop?pageid=${farPage}">Next</a></li>
                           </ul>
                         </nav>
                     </div>
